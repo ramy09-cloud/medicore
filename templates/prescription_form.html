@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% if obj %}Edit{% else %}Add{% endif %} prescription{% endblock %}
+{% block pretitle %}<a href="{% url 'prescriptions' %}">Prescriptions</a>{% endblock %}
+{% block heading %}<i class="ti ti-pill"></i> {% if obj %}Edit{% else %}Add{% endif %} prescription{% endblock %}
+
+{% block content %}
+<div class="row"><div class="col-lg-8">
+  <div class="card">
+    <form method="post">
+      {% csrf_token %}
+      <div class="card-body">
+        {{ form|crispy }}
+      </div>
+      <div class="card-footer text-right">
+        <a href="{% url 'prescriptions' %}" class="btn btn-link">Cancel</a>
+        <button type="submit" class="btn btn-primary"><i class="ti ti-device-floppy"></i> Save</button>
+      </div>
+    </form>
+  </div>
+</div></div>
+{% endblock %}

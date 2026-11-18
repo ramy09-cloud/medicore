@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Appointments{% endblock %}
+{% block pretitle %}Records{% endblock %}
+{% block heading %}<i class="ti ti-calendar-event"></i> Appointments{% endblock %}
+{% block actions %}<a href="{% url 'add_appointment' %}" class="btn btn-primary"><i class="ti ti-plus"></i> Add appointment</a>{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <form method="get" class="search flex-fill">
+      <i class="ti ti-search"></i>
+      <input type="text" name="q" value="{{ q }}" class="form-control" placeholder="Search appointments...">
+    </form>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead><tr><th>ID</th><th>Date</th><th>Time</th><th>Patient</th><th>Doctor</th><th>Reason</th><th>Status</th><th></th></tr></thead>
+      <tbody>
+      {% for x in items %}
+        <tr>
+          <td><span class="text-id">#{{ x.appointment_id }}</span></td>
+          <td>{{ x.date|date:"d M Y" }}</td>
+          <td>{{ x.time|time:"H:i" }}</td>
+          <td>{{ x.patient }}</td>
+          <td>{{ x.doctor }}</td>
+          <td>{{ x.reason|truncatechars:30 }}</td>
+          <td><span class="status status-{{ x.status|lower }}">{{ x.status }}</span></td>
+          <td class="text-right text-nowrap">
+            <a href="{% url 'edit_appointment' x.pk %}" class="btn btn-sm btn-light btn-icon" title="Edit"><i class="ti ti-edit"></i></a>
+            <a href="{% url 'delete_appointment' x.pk %}" class="btn btn-sm btn-light btn-icon text-danger" title="Delete"><i class="ti ti-trash"></i></a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="8" class="text-muted">No appointments yet.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="card-footer">{{ items|length }} record{{ items|length|pluralize }}</div>
+</div>
+{% endblock %}

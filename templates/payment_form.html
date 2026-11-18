@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% if obj %}Edit{% else %}Add{% endif %} payment{% endblock %}
+{% block pretitle %}<a href="{% url 'payments' %}">Payments</a>{% endblock %}
+{% block heading %}<i class="ti ti-cash"></i> {% if obj %}Edit{% else %}Add{% endif %} payment{% endblock %}
+
+{% block content %}
+<div class="row"><div class="col-lg-8">
+  <div class="card">
+    <form method="post">
+      {% csrf_token %}
+      <div class="card-body">
+        {{ form|crispy }}
+      </div>
+      <div class="card-footer text-right">
+        <a href="{% url 'payments' %}" class="btn btn-link">Cancel</a>
+        <button type="submit" class="btn btn-primary"><i class="ti ti-device-floppy"></i> Save</button>
+      </div>
+    </form>
+  </div>
+</div></div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Delete{% endblock %}
+{% block heading %}Delete record{% endblock %}
+
+{% block content %}
+<div class="row"><div class="col-lg-6">
+  <div class="card">
+    <form method="post">
+      {% csrf_token %}
+      <div class="card-body text-center py-4">
+        <i class="ti ti-alert-triangle text-danger" style="font-size:3rem"></i>
+        <h3 class="h5 mt-2">Are you sure?</h3>
+        <p class="text-muted mb-0">Delete <b>{{ obj }}</b>? This can't be undone.</p>
+      </div>
+      <div class="card-footer d-flex">
+        <a href="{% url list_page %}" class="btn btn-light flex-fill mr-2">Cancel</a>
+        <button class="btn btn-danger flex-fill">Yes, delete</button>
+      </div>
+    </form>
+  </div>
+</div></div>
+{% endblock %}

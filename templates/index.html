@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+{% block title %}Dashboard{% endblock %}
+{% block pretitle %}Overview{% endblock %}
+{% block heading %}Dashboard{% endblock %}
+{% block actions %}<a href="{% url 'add_appointment' %}" class="btn btn-primary"><i class="ti ti-plus"></i> New appointment</a>{% endblock %}
+
+{% block content %}
+<!-- Money -->
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card"><div class="card-body">
+      <div class="subheader">Revenue received</div>
+      <div class="h3 font-weight-bold mb-0 mt-1">UGX {{ revenue|floatformat:0|intcomma }}</div>
+    </div></div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card"><div class="card-body">
+      <div class="subheader">Outstanding balances</div>
+      <div class="h3 font-weight-bold mb-0 mt-1 text-danger">UGX {{ outstanding|floatformat:0|intcomma }}</div>
+    </div></div>
+  </div>
+</div>
+
+<!-- Counts for every table -->
+<div class="row">
+  <div class="col-sm-6 col-lg-3"><a href="{% url 'patients' %}" class="card stat"><span class="stat-icon bg-blue"><i class="ti ti-user-heart"></i></span><div><div class="stat-number">{{ patients }}</div><div class="stat-label">Patients</div></div></a></div>
+  <div class="col-sm-6 col-lg-3"><a href="{% url 'doctors' %}" class="card stat"><span class="stat-icon bg-green"><i class="ti ti-stethoscope"></i></span><div><div class="stat-number">{{ doctors }}</div><div class="stat-label">Doctors</div></div></a></div>
+  <div class="col-sm-6 col-lg-3"><a href="{% url 'appointments' %}" class="card stat"><span class="stat-icon bg-orange"><i class="ti ti-calendar-event"></i></span><div><div class="stat-number">{{ appointments }}</div><div class="stat-label">Appointments</div></div></a></div>
+  <div class="col-sm-6 col-lg-3"><a href="{% url 'diagnoses' %}" class="card stat"><span class="stat-icon bg-azure"><i class="ti ti-clipboard-heart"></i></span><div><div class="stat-number">{{ diagnoses }}</div><div class="stat-label">Diagnoses</div></div></a></div>
+  <div class="col-sm-6 col-lg-3"><a href="{% url 'treatments' %}" class="card stat"><span class="stat-icon bg-lime"><i class="ti ti-bed"></i></span><div><div class="stat-number">{{ treatments }}</div><div class="stat-label">Treatments</div></div></a></div>
+  <div class="col-sm-6 col-lg-3"><a href="{% url 'prescriptions' %}" class="card stat"><span class="stat-icon bg-purple"><i class="ti ti-pill"></i></span><div><div class="stat-number">{{ prescriptions }}</div><div class="stat-label">Prescriptions</div></div></a></div>
+  <div class="col-sm-6 col-lg-3"><a href="{% url 'bills' %}" class="card stat"><span class="stat-icon bg-red"><i class="ti ti-file-invoice"></i></span><div><div class="stat-number">{{ bills }}</div><div class="stat-label">Patient Bills</div></div></a></div>
+  <div class="col-sm-6 col-lg-3"><a href="{% url 'payments' %}" class="card stat"><span class="stat-icon bg-teal"><i class="ti ti-cash"></i></span><div><div class="stat-number">{{ payments }}</div><div class="stat-label">Payments</div></div></a></div>
+</div>
+
+<div class="row">
+  <!-- Recent diagnoses -->
+  <div class="col-lg-7">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Recent diagnoses</h3>
+        <a href="{% url 'add_diagnosis' %}" class="btn btn-sm btn-outline-primary"><i class="ti ti-plus"></i> New</a>
+      </div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead><tr><th>Date</th><th>Patient</th><th>Doctor</th><th>Description</th></tr></thead>
+          <tbody>
+          {% for d in recent %}
+            <tr><td class="text-id">{{ d.date|date:"d M Y" }}</td><td>{{ d.patient }}</td><td>{{ d.doctor }}</td><td>{{ d.description|truncatechars:40 }}</td></tr>
+          {% empty %}
+            <tr><td colspan="4" class="text-muted">No diagnoses yet.</td></tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upcoming appointments -->
+  <div class="col-lg-5">
+    <div class="card">
+      <div class="card-header"><h3 class="card-title">Upcoming appointments</h3></div>
+      <ul class="list-group list-group-flush">
+        {% for a in upcoming %}
+        <li class="list-group-item d-flex align-items-center">
+          <span class="avatar">{{ a.patient.name|slice:":1" }}</span>
+          <div class="flex-fill"><div class="font-weight-bold">{{ a.patient }}</div><small class="text-muted">{{ a.doctor }}</small></div>
+          <div class="text-right">{{ a.date|date:"d M" }}<br><small class="text-muted">{{ a.time|time:"H:i" }}</small></div>
+        </li>
+        {% empty %}
+        <li class="list-group-item text-muted">No upcoming appointments.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

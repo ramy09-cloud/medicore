@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+{% block title %}Patient Bills{% endblock %}
+{% block pretitle %}Records{% endblock %}
+{% block heading %}<i class="ti ti-file-invoice"></i> Patient Bills{% endblock %}
+{% block actions %}<a href="{% url 'add_bill' %}" class="btn btn-primary"><i class="ti ti-plus"></i> Add patient bill</a>{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <form method="get" class="search flex-fill">
+      <i class="ti ti-search"></i>
+      <input type="text" name="q" value="{{ q }}" class="form-control" placeholder="Search patient bills...">
+    </form>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead><tr><th>ID</th><th>Patient</th><th>Diagnosis</th><th>Total (UGX)</th><th>Paid (UGX)</th><th>Balance (UGX)</th><th>Status</th><th></th></tr></thead>
+      <tbody>
+      {% for x in items %}
+        <tr>
+          <td><span class="text-id">#{{ x.bill_id }}</span></td>
+          <td>{{ x.patient }}</td>
+          <td>#{{ x.diagnosis_id }}</td>
+          <td>{{ x.total_amount|floatformat:0|intcomma }}</td>
+          <td>{{ x.total_amount_paid|floatformat:0|intcomma }}</td>
+          <td>{{ x.balance|floatformat:0|intcomma }}</td>
+          <td><span class="status status-{{ x.status|lower }}">{{ x.status }}</span></td>
+          <td class="text-right text-nowrap">
+            <a href="{% url 'edit_bill' x.pk %}" class="btn btn-sm btn-light btn-icon" title="Edit"><i class="ti ti-edit"></i></a>
+            <a href="{% url 'delete_bill' x.pk %}" class="btn btn-sm btn-light btn-icon text-danger" title="Delete"><i class="ti ti-trash"></i></a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="8" class="text-muted">No patient bills yet.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="card-footer">{{ items|length }} record{{ items|length|pluralize }}</div>
+</div>
+{% endblock %}

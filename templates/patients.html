@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Patients{% endblock %}
+{% block pretitle %}Records{% endblock %}
+{% block heading %}<i class="ti ti-user-heart"></i> Patients{% endblock %}
+{% block actions %}<a href="{% url 'add_patient' %}" class="btn btn-primary"><i class="ti ti-plus"></i> Add patient</a>{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <form method="get" class="search flex-fill">
+      <i class="ti ti-search"></i>
+      <input type="text" name="q" value="{{ q }}" class="form-control" placeholder="Search patients...">
+    </form>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead><tr><th>ID</th><th>Name</th><th>Gender</th><th>Age</th><th>Weight (kg)</th><th>Contact</th><th>Address</th><th></th></tr></thead>
+      <tbody>
+      {% for x in items %}
+        <tr>
+          <td><span class="text-id">#{{ x.patient_id }}</span></td>
+          <td>{{ x.name }}</td>
+          <td>{{ x.gender }}</td>
+          <td>{{ x.age }}</td>
+          <td>{{ x.weight }}</td>
+          <td>{{ x.contact }}</td>
+          <td>{{ x.address }}</td>
+          <td class="text-right text-nowrap">
+            <a href="{% url 'edit_patient' x.pk %}" class="btn btn-sm btn-light btn-icon" title="Edit"><i class="ti ti-edit"></i></a>
+            <a href="{% url 'delete_patient' x.pk %}" class="btn btn-sm btn-light btn-icon text-danger" title="Delete"><i class="ti ti-trash"></i></a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="8" class="text-muted">No patients yet.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="card-footer">{{ items|length }} record{{ items|length|pluralize }}</div>
+</div>
+{% endblock %}
