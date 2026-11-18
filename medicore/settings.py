@@ -83,12 +83,6 @@ DATABASES = {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     }
-    import os, shutil
-if os.environ.get("VERCEL"):
-    _tmp_db = Path("/tmp/db.sqlite3")
-    if not _tmp_db.exists():
-        shutil.copy(BASE_DIR / "db.sqlite3", _tmp_db)
-    DATABASES["default"]["NAME"] = _tmp_db
 }
 
 
@@ -182,3 +176,10 @@ JAZZMIN_UI_TWEAKS = {
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = ["https://*.onrender.com", "https://*.vercel.app"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+import os, shutil
+if os.environ.get("VERCEL"):
+    _tmp_db = Path("/tmp/db.sqlite3")
+    if not _tmp_db.exists():
+        shutil.copy(BASE_DIR / "db.sqlite3", _tmp_db)
+    DATABASES["default"]["NAME"] = _tmp_db
