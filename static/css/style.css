@@ -1,0 +1,88 @@
+/* =========================================================
+   MediCore - Tabler-style layout on top of Bootstrap 4
+   ========================================================= */
+:root {
+  --primary: #206bc4;      /* Tabler blue */
+  --sidebar: #1f2937;
+  --bg: #f6f8fb;
+  --border: #e6e7e9;
+  --muted: #6c7a91;
+}
+
+body { background: var(--bg); color: #1d273b; font-size: .9rem; }
+a { color: var(--primary); }
+.btn-primary { background: var(--primary); border-color: var(--primary); }
+.btn-primary:hover { background: #1a569d; border-color: #1a569d; }
+.ti { font-size: 1.1rem; vertical-align: -2px; }
+
+/* ---------- Sidebar ---------- */
+.sidebar { background: var(--sidebar); padding: 0; align-items: flex-start; }
+.sidebar .navbar-brand { font-weight: 700; padding: 1rem 1.25rem; font-size: 1.15rem; }
+.sidebar .navbar-brand .ti { color: #4dabf7; font-size: 1.5rem; }
+.sidebar .navbar-toggler { margin: .75rem 1rem; }
+.sidebar .navbar-nav { width: 100%; padding: 0 .75rem 1rem; }
+.sidebar .nav-link { color: rgba(255,255,255,.7); border-radius: 6px; padding: .55rem .75rem !important; margin-bottom: 2px; }
+.sidebar .nav-link .ti { margin-right: .6rem; }
+.sidebar .nav-link:hover { color: #fff; background: rgba(255,255,255,.06); }
+.sidebar .nav-link.active { color: #fff; background: rgba(255,255,255,.1); font-weight: 600; }
+.sidebar .nav-heading { color: rgba(255,255,255,.4); text-transform: uppercase; font-size: .7rem; letter-spacing: .05em; padding: 1rem .75rem .4rem; }
+
+@media (min-width: 992px) {
+  .sidebar { position: fixed; top: 0; bottom: 0; left: 0; width: 15rem; flex-direction: column; overflow-y: auto; }
+  .sidebar .navbar-collapse { width: 100%; align-items: flex-start; }
+  .sidebar .navbar-nav { flex-direction: column; }
+  .page-wrapper { margin-left: 15rem; }
+}
+
+/* ---------- Top bar & page header ---------- */
+.page-wrapper { min-height: 100vh; display: flex; flex-direction: column; }
+.topbar { display: flex; align-items: center; background: #fff; border-bottom: 1px solid var(--border); padding: .6rem 1.5rem; }
+.user-menu { display: flex; align-items: center; color: #1d273b; text-decoration: none !important; }
+.avatar { width: 2rem; height: 2rem; border-radius: 50%; background: #e7f0fa; color: var(--primary); display: inline-flex; align-items: center; justify-content: center; font-weight: 600; margin-right: .5rem; }
+.page-header { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 1.5rem .5rem; flex-wrap: wrap; gap: .75rem; }
+.page-pretitle { text-transform: uppercase; font-size: .7rem; color: var(--muted); letter-spacing: .05em; }
+.page-title { font-size: 1.25rem; font-weight: 600; margin: 0; }
+.page-title .ti { color: var(--primary); font-size: 1.35rem; }
+.page-body { padding: 1rem 1.5rem; flex: 1; }
+.footer { padding: 1rem 1.5rem; color: var(--muted); font-size: .8rem; }
+
+/* ---------- Cards & tables ---------- */
+.card { border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,.03); margin-bottom: 1.25rem; }
+.card-header { background: #fff; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.card-title { font-size: 1rem; font-weight: 600; margin: 0; }
+.card-footer { background: #fff; color: var(--muted); }
+.table { margin-bottom: 0; }
+.table thead th { border-top: 0; border-bottom: 1px solid var(--border); background: #fafbfc; color: var(--muted); font-size: .7rem; text-transform: uppercase; letter-spacing: .04em; font-weight: 600; }
+.table td { vertical-align: middle; border-top: 1px solid var(--border); }
+.text-id { color: var(--muted); }
+
+/* Stat cards on the dashboard */
+.card.stat { display: flex; flex-direction: row; align-items: center; justify-content: flex-start; padding: 1rem; color: inherit; text-decoration: none !important; }
+.stat:hover { box-shadow: 0 4px 14px rgba(0,0,0,.06); }
+.stat-icon { width: 2.6rem; height: 2.6rem; border-radius: 6px; color: #fff; display: flex; align-items: center; justify-content: center; margin-right: .9rem; }
+.stat-icon .ti { font-size: 1.4rem; }
+.stat-number { font-size: 1.25rem; font-weight: 700; line-height: 1.1; }
+.stat-label { color: var(--muted); }
+.subheader { text-transform: uppercase; font-size: .7rem; color: var(--muted); letter-spacing: .05em; font-weight: 600; }
+.bg-blue { background: #206bc4; } .bg-green { background: #2fb344; } .bg-orange { background: #f76707; }
+.bg-azure { background: #4299e1; } .bg-teal { background: #0ca678; } .bg-purple { background: #ae3ec9; }
+.bg-red { background: #d63939; } .bg-lime { background: #74b816; }
+
+/* Status labels (light Tabler style) */
+.status { display: inline-block; padding: .2rem .55rem; border-radius: 4px; font-size: .75rem; font-weight: 600; }
+.status-paid, .status-completed { background: #e7f6ea; color: #2fb344; }
+.status-partial, .status-pending { background: #fff4e5; color: #f59f00; }
+.status-scheduled, .status-ongoing { background: #e8f2fc; color: #4299e1; }
+.status-unpaid, .status-cancelled { background: #fbebeb; color: #d63939; }
+
+/* Search box and action buttons */
+.search { position: relative; max-width: 280px; }
+.search .ti { position: absolute; left: .7rem; top: .55rem; color: var(--muted); }
+.search input { padding-left: 2.1rem; }
+.btn-icon { padding: .25rem .5rem; }
+
+/* ---------- Login page ---------- */
+.login-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+.login-box { width: 100%; max-width: 400px; }
+.login-brand { text-align: center; font-size: 1.6rem; font-weight: 700; margin-bottom: 1.25rem; }
+.login-brand .ti { color: var(--primary); font-size: 2rem; }
